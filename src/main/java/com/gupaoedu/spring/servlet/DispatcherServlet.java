@@ -65,28 +65,32 @@ public class DispatcherServlet extends HttpServlet {
 
         //测试
         DemoAction demoAction = (DemoAction) beanMap.get("demoAction");
-        demoAction.query(null,null,"xiaoqiang");
+        demoAction.query(null, null, "xiaoqiang");
     }
 
     /**
      * 自动装配bean
      */
     private void doAutowired() {
-     if (beanMap.isEmpty()) {return;}
+        if (beanMap.isEmpty()) {
+            return;
+        }
 
         for (Map.Entry<String, Object> entry : beanMap.entrySet()) {
             System.out.println("封装bean :" + entry.getValue());
             // 之前只是初始化bean实例，现在给bean进行bean与bean之间组装
             Field[] fields = entry.getValue().getClass().getDeclaredFields();
             for (Field filed : fields) {
-                if (!filed.isAnnotationPresent(Autowried.class)){continue;}
+                if (!filed.isAnnotationPresent(Autowried.class)) {
+                    continue;
+                }
 
                 Autowried autowried = filed.getAnnotation(Autowried.class);
 
                 System.out.println("起名称：" + autowried.value());
                 String beanName = autowried.value().trim();
 
-                if ("".equals(beanName)){
+                if ("".equals(beanName)) {
                     // 注入这个字段
                     System.out.println(filed.getType().getName());
                     System.out.println("注入bean名称为：" + filed.getType().getName());
