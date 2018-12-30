@@ -87,6 +87,8 @@ public class DispatcherServlet extends HttpServlet {
                 String beanName = autowried.value().trim();
 
                 if ("".equals(beanName)){
+                    // 注入这个字段
+                    System.out.println(filed.getType().getName());
                     System.out.println("注入bean名称为：" + filed.getType().getName());
                     beanName = filed.getType().getName();
                 }
